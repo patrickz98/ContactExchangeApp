@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.simple.JSONArray;
@@ -25,10 +26,25 @@ public class YourContactView
 
     public YourContactView(ViewGroup rootView)
     {
-        this.rootView = rootView;
         this.context  = rootView.getContext();
         this.imageView = new ImageView(context);
         this.json = new JSONObject();
+
+        rootView.setBackgroundColor(Color.parseColor("#ffffff"));
+
+        ScrollView scroll = new ScrollView(context);
+        rootView.addView(scroll);
+
+        LinearLayout.LayoutParams linLayoutParam = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        LinearLayout scrollLayout = new LinearLayout(context);
+        scrollLayout.setOrientation(LinearLayout.VERTICAL);
+        scrollLayout.setLayoutParams(linLayoutParam);
+
+        scroll.addView(scrollLayout);
+
+        this.rootView = scrollLayout;
     }
 
     private TextView createTextView(String key, String text)
@@ -123,6 +139,8 @@ public class YourContactView
 
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         //imageView.setBackgroundColor(Color.parseColor("#ff3355"));
+        imageView.setPadding(0, 50, 0, 100);
+
         rootView.addView(imageView);
 
         setQrText(json.toString());
