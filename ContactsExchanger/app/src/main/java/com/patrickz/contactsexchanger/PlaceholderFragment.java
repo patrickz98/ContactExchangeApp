@@ -51,16 +51,15 @@ public class PlaceholderFragment extends Fragment
         if (id == 1)
         {
             YourContactView contactView = new YourContactView((ViewGroup) rootView);
-            // YourContactView contactView = new YourContactView(container);
             contactView.onCreateView();
         }
 
-//        if (id == 2)
-//        {
-//            ContactsView contactsView = new ContactsView();
-//        }
+        if (id == 2)
+        {
+            ContactsView contactsView = new ContactsView((ViewGroup) rootView);
+            contactsView.createContactList();
+        }
 
         return rootView;
-        // return null;
     }
 }

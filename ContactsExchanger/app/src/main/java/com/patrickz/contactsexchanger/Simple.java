@@ -1,7 +1,6 @@
 package com.patrickz.contactsexchanger;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.media.ImageWriter;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 
 import com.google.zxing.BarcodeFormat;
@@ -101,5 +100,24 @@ public class Simple
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    public static GradientDrawable roundedCorners(int radius, String color, int strockSize, String strockColor)
+    {
+        GradientDrawable gdrawable = new GradientDrawable();
+        gdrawable.setCornerRadius(radius);
+        gdrawable.setColor(Color.parseColor(color));
+        gdrawable.setStroke(strockSize, Color.parseColor(strockColor));
+
+        return gdrawable;
+    }
+
+    public static GradientDrawable roundedCorners(int radius, String color)
+    {
+        GradientDrawable gdrawable = new GradientDrawable();
+        gdrawable.setCornerRadius(radius);
+        gdrawable.setColor(Color.parseColor(color));
+
+        return gdrawable;
     }
 }

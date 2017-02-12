@@ -134,8 +134,8 @@ public class YourContactView
 //        ContactManager contacts = new ContactManager(context);
 //        contacts.getAllContacts();
 
-        rootView.addView(createTextView("name",   "Patrick Zierahn"));
-        rootView.addView(createTextView("phone",  "+49 123456789"));
+        rootView.addView(createTextView("name",  "Patrick Zierahn"));
+        rootView.addView(createTextView("phone", "+49 123456789"));
 
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         //imageView.setBackgroundColor(Color.parseColor("#ff3355"));
