@@ -22,18 +22,18 @@ import java.util.Map;
 
 public class Simple
 {
+    private final static String LOGTAG = MainActivity.LOGPATTERN + "Simple";
+
     public static Bitmap encodeAsBitmap(String text, int width, int height) throws Exception
     {
+        Log.d(LOGTAG, "QRCode gen. started.");
+
         Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         hints.put(EncodeHintType.MARGIN, 1);
 
-        Log.d("PatrickPups", "QRCodeWriter start.");
-
         QRCodeWriter writer = new QRCodeWriter();
         BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, width, height, hints);
-
-        Log.d("PatrickPups", "QRCodeWriter done.");
 
 //        Log.d("PatrickPups", "createBitmap start.");
 //
@@ -54,8 +54,6 @@ public class Simple
 //
 //        return bmp;
 
-        Log.d("PatrickPups", "createBitmap start.");
-
         final int widthm  = matrix.getWidth();
         final int heightm = matrix.getHeight();
 
@@ -74,7 +72,7 @@ public class Simple
         Bitmap bitmap = Bitmap.createBitmap(widthm, heightm, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, widthm, 0, 0, widthm, heightm);
 
-        Log.d("PatrickPups", "createBitmap done.");
+        Log.d(LOGTAG, "QRCode gen. done.");
 
         return bitmap;
     }
