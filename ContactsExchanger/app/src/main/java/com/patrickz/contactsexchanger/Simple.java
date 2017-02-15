@@ -10,6 +10,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -120,4 +122,13 @@ public class Simple
 
         return gdrawable;
     }
+
+//    public static final int MATCH_PARENT = -1;
+//    public static final int WRAP_CONTENT = -2;
+//
+//    public static ViewGroup layout(ViewGroup layoutObj, int width, int height)
+//    {
+//        return new layoutObj.LayoutParams(width, height);
+//        layoutObj.generateLayoutParams();
+//    }
 }

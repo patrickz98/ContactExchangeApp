@@ -44,10 +44,7 @@ public class ContactsView
 
     private LinearLayout contactView(final String name, JSONObject json)
     {
-        if (name.length() <= 0)
-        {
-            return null;
-        }
+        if (name.length() <= 0) return null;
 
         LinearLayout.LayoutParams linLayoutParam = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

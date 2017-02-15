@@ -7,10 +7,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,44 +17,8 @@ import android.widget.Toolbar;
 
 import org.json.simple.JSONObject;
 
-public class ShareContact extends Activity
+public class SaveContact extends Activity
 {
-    private final static String LOGTAG = MainActivity.LOGPATTERN + "ShareContact";
-
-    private ImageView imageView;
-
-    private void setQrContent(String qrContent)
-    {
-        final Handler mHandler = new Handler();
-
-        final String contactString = qrContent;
-
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    final Bitmap bitmap = Simple.encodeAsBitmap(contactString, 800, 800);
-
-                    mHandler.post(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            imageView.setImageBitmap(bitmap);
-                        }
-                    });
-                }
-                catch (Exception exc)
-                {
-                    exc.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -65,10 +28,8 @@ public class ShareContact extends Activity
 
         JSONObject json = new JSONObject(intent.getStringExtra("json"));
 
-        Log.d(LOGTAG, json.toString(0));
-
-        int color = Color.parseColor("#7C34F8");
-//        int color = Color.parseColor("#1ED760");
+//        int color = Color.parseColor("#7C34F8");
+        int color = Color.parseColor("#1ED760");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
@@ -84,7 +45,6 @@ public class ShareContact extends Activity
         LinearLayout layout = new LinearLayout(this);
         layout.setBackgroundColor(Color.WHITE);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER_HORIZONTAL);
 
         layout.setLayoutParams(new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -106,34 +66,33 @@ public class ShareContact extends Activity
         layout.addView(toolbar);
 
         //
-        // Qr Code
-        //
-
-        imageView = new ImageView(this);
-
-        layout.addView(imageView);
-
-        imageView.setPadding(20, 20, 20, 20);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        setQrContent(json.toString());
-
-        //
         // TextView
         //
 
         TextView text = new TextView(this);
 
         text.setTextSize(20f);
-        text.setText(json.toString(0));
+        text.setText(json.toString(2));
         // text.setBackgroundColor(Color.parseColor("#ff33ff"));
 
         text.setPadding(20, 20, 20, 20);
 
         text.setLayoutParams(new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         layout.addView(text);
+
+
+        //
+        // Button
+        //
+
+        Button button = new Button(this);
+        button.setText("Test");
+
+        text.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        layout.addView(button);
     }
 }

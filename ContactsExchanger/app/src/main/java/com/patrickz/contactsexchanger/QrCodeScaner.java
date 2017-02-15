@@ -1,15 +1,25 @@
 package com.patrickz.contactsexchanger;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+import android.provider.ContactsContract.*;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONException;
+import org.json.simple.JSONObject;
 
 public class QrCodeScaner extends Activity implements ZXingScannerView.ResultHandler
 {
@@ -97,6 +107,72 @@ public class QrCodeScaner extends Activity implements ZXingScannerView.ResultHan
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, ToneGenerator.MAX_VOLUME);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
 
-        onBackPressed();
+        JSONObject json = null;
+
+        try
+        {
+            json = new JSONObject(qrResult);
+        }
+        catch (JSONException exc)
+        {
+        }
+
+//        nuke();
+//        finish();
+
+        if (json == null)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setMessage("Error with Code!");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        startScanner();
+                    }
+                });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+
+            return;
+        }
+
+        Log.d(LOGTAG, "json = " + json.toString());
+
+//        Intent intent = new Intent(this, SaveContact.class);
+//        intent.putExtra("json", qrResult);
+
+
+        Intent intent = new Intent(Intents.Insert.ACTION);
+        // Sets the MIME type to match the Contacts Provider
+        intent.setType(RawContacts.CONTENT_TYPE);
+
+        if (json.has("name"))
+        {
+            intent.putExtra(Intents.Insert.NAME, json.getString("name"));
+            Log.d(LOGTAG, "has name");
+        }
+
+        if (json.has("mail"))
+        {
+            intent.putExtra(Intents.Insert.EMAIL, json.getString("mail"));
+            intent.putExtra(Intents.Insert.EMAIL_TYPE, CommonDataKinds.Email.TYPE_MOBILE);
+            Log.d(LOGTAG, "has mail");
+        }
+
+        if (json.has("numbers"))
+        {
+            JSONArray numbers = json.getJSONArray("numbers");
+            intent.putExtra(Intents.Insert.PHONE, numbers.getJSONObject(0).getString("normalizedNumber"));
+
+            Log.d(LOGTAG, "has numbers");
+        }
+
+        this.startActivity(intent);
     }
 }
