@@ -43,11 +43,9 @@ public class QrCodeScaner extends Activity implements ZXingScannerView.ResultHan
         Log.d(LOGTAG, "startScanner");
 
         mScannerView = new ZXingScannerView(this);
-
         mScannerView.setResultHandler(this);
         mScannerView.setAutoFocus(true);
         mScannerView.setFlash(false);
-
         mScannerView.startCamera();
 
         qrStart = true;
@@ -128,13 +126,13 @@ public class QrCodeScaner extends Activity implements ZXingScannerView.ResultHan
             builder.setCancelable(false);
 
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int id)
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        startScanner();
-                    }
-                });
+                    startScanner();
+                }
+            });
 
             AlertDialog alert = builder.create();
             alert.show();

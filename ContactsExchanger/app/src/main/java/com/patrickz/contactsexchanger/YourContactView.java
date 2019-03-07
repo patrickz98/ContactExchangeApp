@@ -23,7 +23,6 @@ public class YourContactView
     private final ImageView imageView;
     private JSONObject json;
 
-
     public YourContactView(ViewGroup rootView)
     {
         this.context  = rootView.getContext();
